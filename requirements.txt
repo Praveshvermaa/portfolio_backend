@@ -6,4 +6,5 @@ faiss-cpu
 openai
 google-generativeai
 gunicorn
+httpx
  

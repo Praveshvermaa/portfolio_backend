@@ -2,8 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.chat import router as chat_router
 from app.services.rag import load_data 
-
 import os
+import asyncio
+import httpx
 
 app = FastAPI()
 
@@ -27,9 +28,26 @@ app.add_middleware(
     allow_headers=["*"],
 ) 
 
-@app.on_event("startup")
-def startup():
-    load_data()
+async def keep_alive():
+    """Background task to ping the server and keep it awake."""
+    url = "https://portfolio-backend-kix6.onrender.com/health"
+    await asyncio.sleep(10) # Wait for server to start
+    async with httpx.AsyncClient() as client:
+        while True:
+            try:
+                await client.get(url)
+                # print("Self-ping successful")
+            except Exception as e:
+                pass
+            await asyncio.sleep(300) # 5 minutes
 
+@app.on_event("startup")
+async def startup():
+    load_data()
+    asyncio.create_task(keep_alive())
+
+@app.get("/health")
+def health_check():
+    return {"status": "alive"}
 
 app.include_router(chat_router,prefix="/chat") 

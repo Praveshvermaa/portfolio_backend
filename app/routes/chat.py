@@ -8,10 +8,12 @@ router = APIRouter()
 def chat(q:str):
     return StreamingResponse(
         ask(q), 
-        media_type="text/plain",
+        media_type="text/event-stream",
         headers={
             "X-Accel-Buffering": "no",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive"
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "Content-Encoding": "identity",
+            "X-Content-Type-Options": "nosniff"
         }
     )

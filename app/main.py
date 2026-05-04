@@ -12,10 +12,10 @@ app = FastAPI()
 ENV = os.getenv("ENVIRONMENT", "development")
 
 if ENV == "production":
-    origins = ["https://portfolio2-0-vert-beta.vercel.app"]
+    origins = ["https://pravesh-portfolio1.vercel.app"]
 else:
     origins = [
-        "https://portfolio2-0-vert-beta.vercel.app",
+        "https://pravesh-portfolio1.vercel.app",
         "http://localhost:5173",
         "http://127.0.0.1:5173"
     ]

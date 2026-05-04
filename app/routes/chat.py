@@ -6,4 +6,12 @@ router = APIRouter()
 
 @router.get("/")
 def chat(q:str):
-    return StreamingResponse(ask(q), media_type="text/plain")
+    return StreamingResponse(
+        ask(q), 
+        media_type="text/plain",
+        headers={
+            "X-Accel-Buffering": "no",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive"
+        }
+    )

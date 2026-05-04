@@ -1,12 +1,12 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 from app.core.config import NVIDIA_API_KEY
 
-client = OpenAI(
+client = AsyncOpenAI(
   base_url = "https://integrate.api.nvidia.com/v1",
   api_key = NVIDIA_API_KEY
 )
 
-def generate_answer(context, query):
+async def generate_answer(context, query):
     prompt = f"""
 You are Pravesh's AI portfolio assistant.
 
@@ -23,7 +23,7 @@ QUESTION:
 {query}
 """
 
-    completion = client.chat.completions.create(
+    completion = await client.chat.completions.create(
       model="meta/llama-3.1-8b-instruct",
       messages=[{"role":"user","content":prompt}],
       temperature=0.2,
@@ -32,7 +32,10 @@ QUESTION:
       stream=True
     )
     
-    for chunk in completion:
+    # Send an initial space to flush headers and let the client know the stream has started
+    yield " "
+
+    async for chunk in completion:
         if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None:
             yield chunk.choices[0].delta.content
 

@@ -5,9 +5,9 @@ from app.services.rag import ask
 router = APIRouter()
 
 @router.get("/")
-def chat(q:str):
+async def chat(q:str):
     return StreamingResponse(
-        ask(q), 
+        await ask(q), 
         media_type="text/event-stream",
         headers={
             "X-Accel-Buffering": "no",

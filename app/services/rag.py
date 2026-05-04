@@ -35,7 +35,7 @@ def load_data():
         vector_store.build(chunks)
         vector_store.save(index_path, texts_path)
 
-def ask(query): 
+async def ask(query): 
     # 1. Vector Search (Semantic)
     vector_results = vector_store.search(query, k=3) 
     
@@ -56,6 +56,5 @@ def ask(query):
 
     context = "\n\n".join(context_chunks) 
 
-    answer = generate_answer(context, query) 
-
-    return answer
+    # Since generate_answer is an async generator, calling it returns the generator
+    return generate_answer(context, query) 

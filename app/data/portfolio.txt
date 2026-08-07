@@ -46,6 +46,20 @@ Full Stack Developer Intern — Milko Business App (Jan 2025 – Mar 2025)
 - Worked on real-world dairy business workflows
 
 
+[PROJECT: Portfolio Chatbot]
+Portfolio Chatbot — AI-Powered Personal Assistant
+Tech: Python, FastAPI, FAISS, NVIDIA Embeddings, LLM, Docker, Render
+Description:
+A smart AI chatbot built to answer questions about my portfolio, experience, projects, and skills in a conversational way. The system uses retrieval-based search to provide relevant and accurate responses from my profile data.
+Key Features:
+-Natural language Q&A about my professional background
+-RAG-based retrieval using section-wise chunking of portfolio content
+-Fast similarity search using FAISS vector database
+-AI-generated responses powered by LLM integration
+-Streaming chat response for better user experience
+-Deployed and accessible through a web-based interface
+
+
 [PROJECT: SkillLink] 
 SkillLink — Service Marketplace Platform
 Tech: Next.js, TypeScript, Supabase, Leaflet Maps,Tailwind CSS, ShadCN UI
@@ -94,6 +108,20 @@ Key Features:
 - Engagement: High user adoption with 4.8 average rating.
 Use Case:
 A student searches for semester-specific notes (e.g., Computer Science Semester 5), downloads high-rated materials, and provides feedback, while teachers monitor performance via the dashboard.
+
+
+[PROJECT: AI Job Search & Recommendation Platform]
+AI Job Search & Recommendation Platform
+Tech: Python, FastAPI, React, Vite, PostgreSQL, Qdrant, Google Gemini API, Docker
+Description:
+An AI-powered job search platform that helps users upload their resumes and discover relevant job opportunities through intelligent, semantic matching. The system combines resume parsing, vector search, and LLM-based analysis to provide personalized job recommendations.
+Key Features:
+- Resume upload and AI-based skill extraction
+- Semantic job matching using Qdrant vector search
+- Personalized recommendations with match scoring and skill-gap insights
+- Secure authentication and user management
+- Modern web interface built with React and Tailwind CSS
+- Backend API developed with FastAPI and deployed for real-world use
 
 
 [EDUCATION]

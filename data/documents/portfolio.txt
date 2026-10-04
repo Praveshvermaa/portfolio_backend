@@ -1,11 +1,9 @@
 [PROFILE]
 Name: Pravesh Verma
 Role: Full Stack Developer | Backend Engineer | AI Developer
-
-
 Summary:
 Full Stack Developer specializing in backend systems and AI-powered applications.
-Experienced in building scalable APIs, RAG-based systems, and LLM-powered applications.
+Experienced in building scalable APIs, RAG-based systems, LLM-powered applications, Full Stack Development, Backend Development etc.
 Strong in Data Structures & Algorithms, REST API Design, Scalable API Development, AI systems (RAG, LLM apps, chatbots).
 Keywords: 
 Full Stack Developer, Backend Developer, AI Developer, RAG Engineer, LLM Developer, API Developer, Chatbot Developer
@@ -13,38 +11,30 @@ Full Stack Developer, Backend Developer, AI Developer, RAG Engineer, LLM Develop
 
 [SKILLS: Programming Languages]
 Java, Python, C++, JavaScript, TypeScript, SQL, PHP
-
-
 [SKILLS: Frontend Development]
 React, Next.js, Redux, Context API, Tailwind CSS, Bootstrap, ShadCN UI
-
-
 [SKILLS: Backend Development and Databases]
 Node.js, Express.js, FastAPI, Django
 REST API Design, JWT Authentication, Scalable API Development,  
 MongoDB, MySQL, PostgreSQL, Supabase
-
-
 [SKILLS: AI / Machine Learning]
 RAG (Retrieval-Augmented Generation)
 LLMs (OpenAI API, Gemini API)
 Embeddings, Vector Search (FAISS)
 NLP Pipelines, Sentiment Analysis
 AI Chatbot Development
-
-
 [SKILLS: Tools & Platforms]
 Git, GitHub, Postman, AWS, Vercel, Cloudinary, VS Code
 
 
 [EXPERIENCE:Internship]
-Full Stack Developer Intern — Milko Business App (Jan 2025 – Mar 2025)
-- Built production-level MERN stack application
-- Developed scalable backend APIs using Node.js and MongoDB
-- Implemented authentication and business logic
-- Created reusable React components for UI
-- Worked on real-world dairy business workflows
-
+Full Stack Developer Intern — WonderKids (Apr 2026 – May 2026)
+- Developed 5 production-ready educational math games using React.js, Node.js, Express.js, and MongoDB
+- Engineered 20+ RESTful API endpoints with MongoDB database design
+- Built responsive, mobile-friendly interfaces, reducing page load time by approximately 30%
+- Collaborated with a 5-member cross-functional Agile team using Git/GitHub
+- Resolved 30+ bugs and improved application stability through code reviews
+ 
 
 [PROJECT: Portfolio Chatbot]
 Portfolio Chatbot — AI-Powered Personal Assistant
@@ -57,10 +47,14 @@ Key Features:
 -Fast similarity search using FAISS vector database
 -AI-generated responses powered by LLM integration
 -Streaming chat response for better user experience
--Deployed and accessible through a web-based interface
+-Deployed and accessible through a web-based interface.
+Use Case:
+A user can ask questions about my professional background, experience, projects, and skills, and the chatbot will provide relevant and accurate responses in a conversational way.
 
 
-[PROJECT: SkillLink] 
+
+
+[PROJECT: SkillLink]
 SkillLink — Service Marketplace Platform
 Tech: Next.js, TypeScript, Supabase, Leaflet Maps,Tailwind CSS, ShadCN UI
 Description:

@@ -1,53 +1,92 @@
+from __future__ import annotations
+
+import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes.chat import router as chat_router
-from app.services.rag import load_data 
-import os
-import asyncio
-import httpx
 
-app = FastAPI()
+from app.api.routes.chat import router as chat_router
+from app.config import settings
+from app.models.schemas import HealthResponse
+from app.rag.vectorstore import get_collection_point_count, ingest_portfolio
 
-# Secure CORS: Only allow localhost in development mode
-ENV = os.getenv("ENVIRONMENT", "development")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger("portfolio-rag")
 
-if ENV == "production":
-    origins = ["https://pravesh-portfolio1.vercel.app"]
-else:
-    origins = [
-        "https://pravesh-portfolio1.vercel.app",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-    ]
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Application startup and shutdown lifecycle management.
+    """
+    logger.info("Initializing Portfolio Chatbot Backend...")
+    try:
+        current_points = get_collection_point_count()
+        logger.info("Qdrant collection '%s' points count: %d", settings.qdrant_collection, current_points)
+        if current_points == 0:
+            logger.info("Collection is empty. Automatically initiating portfolio document ingestion...")
+            ingest_portfolio()
+            logger.info("Initial ingestion complete. Ready to serve queries.")
+    except Exception as e:
+        logger.warning("Could not verify or auto-ingest Qdrant collection during startup: %s", e)
+
+    yield
+
+    logger.info("Shutting down Portfolio Chatbot Backend.")
+
+
+app = FastAPI(
+    title="Portfolio RAG Chatbot API",
+    description="Backend API for Pravesh Verma's Portfolio Chatbot with RAG and Qdrant vector database.",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+# Enable CORS for frontend applications (Vite default is 5173)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-) 
+)
 
-async def keep_alive():
-    """Background task to ping the server and keep it awake."""
-    url = "https://portfolio-backend-kix6.onrender.com/health"
-    await asyncio.sleep(10) # Wait for server to start
-    async with httpx.AsyncClient() as client:
-        while True:
-            try:
-                await client.get(url)
-                # print("Self-ping successful")
-            except Exception as e:
-                pass
-            await asyncio.sleep(300) # 5 minutes
+# Register routes
+app.include_router(chat_router)
 
-@app.on_event("startup")
-async def startup():
-    load_data()
-    asyncio.create_task(keep_alive())
 
-@app.get("/health")
-def health_check():
-    return {"status": "alive"}
+@app.get("/", tags=["Root"])
+def root():
+    return {
+        "name": "Pravesh Verma - Portfolio Chatbot API",
+        "version": "1.0.0",
+        "docs_url": "/docs",
+        "chat_endpoint": "/chat/?q={question}",
+    }
 
-app.include_router(chat_router,prefix="/chat") 
+
+@app.get("/health", response_model=HealthResponse, tags=["Health"])
+def health():
+    try:
+        points = get_collection_point_count()
+        return HealthResponse(
+            status="healthy",
+            qdrant_connected=True,
+            points_count=points,
+            collection=settings.qdrant_collection,
+        )
+    except Exception as e:
+        return HealthResponse(
+            status=f"unhealthy: {str(e)}",
+            qdrant_connected=False,
+            points_count=0,
+            collection=settings.qdrant_collection,
+        )
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

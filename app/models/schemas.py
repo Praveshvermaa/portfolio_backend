@@ -1,11 +1,23 @@
-from __future__ import annotations
-
-from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class ChatRequest(BaseModel):
-    query: str = Field(..., min_length=1, description="User question to the chatbot")
+    query: str = Field(
+        ...,
+        min_length=1,
+        max_length=1000,
+        description="User question to the chatbot",
+    )
+
+    @field_validator("query")
+    @classmethod
+    def validate_query(cls, value: str) -> str:
+        value = value.strip()
+
+        if not value:
+            raise ValueError("Query cannot be empty or whitespace only.")
+
+        return value
 
     class Config:
         json_schema_extra = {
@@ -18,7 +30,10 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     query: str
     answer: str
-    sources: List[str] = Field(default_factory=list, description="Sections referenced in the context")
+    sources: list[str] = Field(
+        default_factory=list,
+        description="Sections referenced in the context",
+    )
 
 
 class IngestResponse(BaseModel):

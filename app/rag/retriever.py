@@ -1,41 +1,66 @@
-from __future__ import annotations
-
-import logging
-from typing import Optional
 
 from langchain_core.documents import Document
-from langchain_core.vectorstores import VectorStoreRetriever
+from qdrant_client import models
 
-from app.config import settings
-from app.rag.vectorstore import get_vector_store
-
-logger = logging.getLogger(__name__)
+from app.rag.vectorstore import vector_store_service
 
 
-def get_retriever(
-    k: Optional[int] = None,
-    search_type: str = "similarity",
-) -> VectorStoreRetriever:
-    """
-    Returns a VectorStoreRetriever configured with similarity search.
-    """
-    top_k = k if k is not None else settings.retrieval_k
-    vector_store = get_vector_store()
+class RetrievalService:
 
-    return vector_store.as_retriever(
-        search_type=search_type,
-        search_kwargs={"k": top_k},
-    )
+    def __init__(self, top_k: int = 3) -> None:
+        if top_k < 1:
+            raise ValueError("top_k must be at least 1.")
+
+        self.top_k = top_k
+
+    def retrieve(
+        self,
+        query: str,
+        section: str | None = None,
+    ) -> list[Document]:
+
+        if not query or not query.strip():
+            raise ValueError("Query cannot be empty.")
+
+        vector_store = vector_store_service.connect()
+
+        search_filter = None
+
+        if section:
+            search_filter = models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="metadata.section",
+                        match=models.MatchValue(value=section),
+                    )
+                ]
+            )
+
+        return vector_store.similarity_search(
+            query=query,
+            k=self.top_k,
+            filter=search_filter,
+        )
+
+    def get_retriever(self, section: str | None = None):
+        vector_store = vector_store_service.connect()
+
+        search_kwargs = {"k": self.top_k}
+
+        if section:
+            search_kwargs["filter"] = models.Filter(
+            must=[
+                models.FieldCondition(
+                    key="metadata.section",
+                    match=models.MatchValue(value=section),
+                )
+            ]
+        )
+
+        return vector_store.as_retriever(
+          search_type="similarity",
+          search_kwargs=search_kwargs,
+        )
 
 
-def retrieve_context(query: str, k: Optional[int] = None) -> list[Document]:
-    """
-    Directly retrieves relevant documents for a given query string.
-    """
-    top_k = k if k is not None else settings.retrieval_k
-    vector_store = get_vector_store()
-    results = vector_store.similarity_search(query, k=top_k)
-    return results
-
-
-retriever = get_retriever()
+retrieval_service = RetrievalService(top_k=3)

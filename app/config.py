@@ -52,6 +52,10 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+    frontend_url: str = Field(
+    default="http://localhost:5173",
+    min_length=1,
+    )
 
 
 @lru_cache
@@ -60,4 +64,4 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
-OPENAI_API_KEY = settings.openai_api_key
+OPENAI_API_KEY = settings.openai_api_key

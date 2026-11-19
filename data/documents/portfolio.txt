@@ -104,24 +104,10 @@ Use Case:
 A student searches for semester-specific notes (e.g., Computer Science Semester 5), downloads high-rated materials, and provides feedback, while teachers monitor performance via the dashboard.
 
 
-[PROJECT: AI Job Search & Recommendation Platform]
-AI Job Search & Recommendation Platform
-Tech: Python, FastAPI, React, Vite, PostgreSQL, Qdrant, Google Gemini API, Docker
-Description:
-An AI-powered job search platform that helps users upload their resumes and discover relevant job opportunities through intelligent, semantic matching. The system combines resume parsing, vector search, and LLM-based analysis to provide personalized job recommendations.
-Key Features:
-- Resume upload and AI-based skill extraction
-- Semantic job matching using Qdrant vector search
-- Personalized recommendations with match scoring and skill-gap insights
-- Secure authentication and user management
-- Modern web interface built with React and Tailwind CSS
-- Backend API developed with FastAPI and deployed for real-world use
-
-
 [EDUCATION]
 - B.Tech in Computer Science (AI & ML)
 Lakshmi Narain College of Technology, Bhopal
-CGPA: 8.12 (Expected 2026)
+CGPA: 8.33 ( 2022-2026)
 - Class 12 (MP Board)
 Indian Public H.S. School, Shivpuri, Madhya Pradesh
 Percentage: 96.4% (2021–2022)
@@ -151,16 +137,3 @@ LinkedIn: linkedin.com/in/pravesh-verma
 Phone no: 6264492208
 
 
-[FAQ / QUERY MATCHING SECTION]
-Q: Who is Pravesh Verma?
-A: Pravesh Verma is a Full Stack Developer specializing in backend systems and AI applications like RAG and LLM-based apps.
-Q: What technologies does Pravesh use?
-A: He uses React, Next.js, Node.js, FastAPI, MongoDB, PostgreSQL, and AI tools like OpenAI APIs and vector databases.
-Q: Does Pravesh build AI applications?
-A: Yes, he builds AI-powered applications including chatbots, RAG systems, and NLP-based features.
-Q: What projects has Pravesh built?
-A: SkillLink (marketplace), VibeVerse (AI social app), NotesHub (academic platform).
-Q: How to contact Pravesh?
-A: Email: praveshdhakad62@gmail.com | GitHub: github.com/Praveshvermaa | LinkedIn: linkedin.com/in/pravesh-verma
-Q: Is Pravesh good at DSA?
-A: Yes, he has solved 550+ problems and achieved Global Rank 1028 in TCS CodeVita.

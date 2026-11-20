@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes.chat import router as chat_router
 from app.config import settings
 from app.models.schemas import HealthResponse
+from app.services.keep_alive import keep_alive
+import asyncio
 
 from app.rag.vectorstore import vector_store_service
 from fastapi import FastAPI, HTTPException
@@ -25,6 +27,8 @@ logger = logging.getLogger("portfolio-rag")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing Portfolio Chatbot Backend...")
+
+    keep_alive_task = asyncio.create_task(keep_alive())
 
     try:
         vector_store_service.connect()

@@ -56,6 +56,8 @@ class Settings(BaseSettings):
     default="http://localhost:5173",
     min_length=1,
     )
+    backend_url: str = "http://127.0.0.1:8000"
+    
 
 
 @lru_cache
